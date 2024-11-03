@@ -1,0 +1,237 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background-image: url("https://www.shutterstock.com/image-illustration/oil-painting-abstract-art-background-260nw-2085458473.jpg");
+            background-size: cover;  /* Cover the entire viewport */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Prevent repeating the image */
+            height: 100vh; /* Full viewport height */
+        }
+       
+        header {
+            background-color: #ff6347;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        section {
+            padding: 20px;
+        }
+        .restaurant {
+            background-color: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative; /* Make positioning relative for the background image */
+            overflow: hidden; /* Hide any overflow from the background image */
+        }
+        .restaurant h3 {
+            margin-top: 0;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            align-items: center; /* Align items in the center vertically */
+        }
+        .menu-item span {
+            flex: 1; /* Allow span to take up available space */
+        }
+        .menu-item button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .menu-item button:hover {
+            background-color: #ff4500;
+        }
+        #cart {
+            margin-top: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #total-cost {
+            font-weight: bold;
+        }
+        #order-form {
+            margin-top: 20px;
+        }
+        #order-form input {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #order-form button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #order-form button:hover {
+            background-color: #ff4500;
+        }
+        #success-message {
+            margin-top: 20px;
+            color: green;
+            font-weight: bold;
+        }
+        .food-image {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        /* Specific styles for Pizza Palace background */
+        .pizza-palace {
+            background-image: url('https://cdn.pixabay.com/photo/2020/05/17/04/22/pizza-5179939_640.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white; /* Adjust text color for better visibility on background */
+            position: relative;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .pizza-palace h3 {
+            margin-top: 0;
+            color: white; /* Ensure heading is visible on the background */
+        }
+       
+        /* Specific styles for Burger Haven background */
+        .burger-haven {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-9Sqor8aQf6Jk240izUIkz-NQmZZXfFQJXg&s');
+            background-size: cover;
+            background-position: center;
+            color: white; /* Ensure text color contrasts with the background */
+            position: relative;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Food Delivery</h1>
+        <nav>
+            <ul>
+                <li><a href="#restaurants">Restaurants</a></li>
+                <li><a href="#cart">Your Cart</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="restaurants">
+        <h2>Restaurants</h2>
+        <div class="restaurant pizza-palace">
+            <h3>Pizza Palace</h3>
+            <div class="menu-item">
+                <span>Margherita Pizza</span>
+                <span>₹739.18</span>
+                <button onclick="addToCart('Margherita Pizza', 739.18)">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <span>Pepperoni Pizza</span>
+                <span>₹819.18</span>
+                <button onclick="addToCart('Pepperoni Pizza', 819.18)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="restaurant burger-haven">
+            <h3>Burger Haven</h3>
+            <div class="menu-item">
+                <span>Cheeseburger</span>
+                <span>₹489.18</span>
+                <button onclick="addToCart('Cheeseburger', 489.18)">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <span>Veggie Burger</span>
+                <span>₹530.18</span>
+                <button onclick="addToCart('Veggie Burger', 530.18)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="cart">
+        <h2>Your Cart</h2>
+        <ul id="cart-items"></ul>
+        <div id="total-cost">Total Cost: ₹0.00</div> <!-- Total cost display -->
+
+        <div id="order-form">
+            <h3>Place Your Order</h3>
+            <input type="text" id="name" placeholder="Enter your name" required>
+            <input type="text" id="phone" placeholder="Enter your phone number" required>
+            <input type="text" id="address" placeholder="Enter your address" required>
+            <button onclick="placeOrder()">Place Order</button>
+        </div>
+        <div id="success-message"></div> <!-- Success message display -->
+    </section>
+
+    <script>
+        let totalCost = 0; // Initialize total cost
+
+        function addToCart(item, price) {
+            const cartItems = document.getElementById('cart-items');
+            const li = document.createElement('li');
+            li.textContent = `${item} - ₹${price
+[9/10, 7:46 PM] Kaviya: }`;
+            cartItems.appendChild(li);
+
+            totalCost += price; // Update total cost
+            document.getElementById('total-cost').textContent = `Total Cost: ₹${totalCost.toFixed(2)}`; // Update total cost display
+        }
+
+        function placeOrder() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            if (!name || !phone || !address) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // Simulate placing an order (you can customize this part as per your requirement)
+            document.getElementById('success-message').textContent = `Thank you, ${name}! Your order has been placed successfully.`;
+            
+            // Clear the cart and reset total cost
+            document.getElementById('cart-items').innerHTML = '';
+            totalCost = 0;
+            document.getElementById('total-cost').textContent = `Total Cost: ₹${totalCost.toFixed(2)}`;
+
+            // Clear form fields
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('address').value = '';
+        }
+    </script>
+</body>
+</html>
